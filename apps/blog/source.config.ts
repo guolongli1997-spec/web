@@ -22,6 +22,9 @@ export const blogPosts = defineCollections({
     date: z.coerce.date(),
     heroImagePath: z.string().optional(),
     metaImagePath: z.string().optional(),
+    metaDescription: z.string().optional(),
+    metaTitle: z.string().optional(),
+    description: z.string().optional(),
   }),
   postprocess: {
     includeProcessedMarkdown: true,
