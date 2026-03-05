@@ -174,10 +174,15 @@ export function BlogGrid({
   const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
 
   const [currentPage, setPage] = useState<number>(1);
-  const visibleItems = useMemo(
-    () => items.slice((currentPage - 1) * pageSize, currentPage * pageSize),
-    [items, currentPage, pageSize],
-  );
+  const visibleItems = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = currentPage * pageSize;
+    // On page 1, skip the first item since it's shown as featured
+    if (currentPage === 1) {
+      return items.slice(1, endIndex);
+    }
+    return items.slice(startIndex, endIndex);
+  }, [items, currentPage, pageSize]);
 
   const setCurrentPage = (page: number) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -197,7 +202,7 @@ export function BlogGrid({
 
   return (
     <>
-      {currentPage === 1 && (
+      {items && items.length > 0 && currentPage === 1 && (
         <a
           href={items[0].url}
           className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-background-default rounded-square overflow-hidden border border-stroke-neutral shadow-box-low"
