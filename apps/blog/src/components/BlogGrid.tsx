@@ -17,6 +17,9 @@ import {
   PaginationPrevious,
 } from "@prisma-docs/eclipse";
 
+import { withBlogBasePathForImageSrc } from '@/lib/url';
+
+
 type BlogCardItem = {
   url: string;
   title: string;
@@ -291,7 +294,7 @@ export function BlogGrid({
             {post.imageSrc && (
               <div className="relative max-w-96 aspect-[16/9] w-full hidden sm:block">
                 <Image
-                  src={post.imageSrc}
+                  src={withBlogBasePathForImageSrc(post.imageSrc)}
                   alt={post.imageAlt ?? post.title}
                   fill
                   sizes="384px"
